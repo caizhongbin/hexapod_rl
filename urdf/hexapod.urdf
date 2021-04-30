@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- =================================================================================== -->
+<!--   Copyright 2021 Zhongbin,Cai                               -->
+<!-- =================================================================================== -->
+<!-- This file contains the description of the hexapod robot. -->
+
+<robot name="hexapod">
+    <link name="base">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.18"/>
+            </geometry>
+            <material name="black">
+                <color rgba="0 0 0 100"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.18"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <!--mass-->
+            <mass value="1"/> 
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+        </inertial>
+    </link>
+
+    <!--=====================leg1=====================-->
+    <link name="leg1_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg1_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg1_roll"/>
+        <origin rpy="0 0 0.52356" xyz="0.15588457 0.09 0"/>
+    </joint>
+
+    <!--=====================leg2=====================-->
+    <link name="leg2_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg2_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg2_roll"/>
+        <origin rpy="0 0 1.57" xyz="0 0.18 0"/>
+    </joint>
+
+    <!--=====================leg3=====================-->
+    <link name="leg3_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg3_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg3_roll"/>
+        <origin rpy="0 0 2.618" xyz="-0.15588457 0.09 0"/>
+    </joint>
+
+
+    <!--=====================leg4=====================-->
+    <link name="leg4_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg4_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg4_roll"/>
+        <origin rpy="0 0 -2.618" xyz="-0.15588457 -0.09 0"/>
+    </joint>
+
+    <!--=====================leg5=====================-->
+    <link name="leg5_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg5_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg5_roll"/>
+        <origin rpy="0 0 -1.57" xyz="0 -0.18 0"/>
+    </joint>
+
+    <!--=====================leg6=====================-->
+    <link name="leg6_roll">
+        <visual>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.09" radius="0.03"/>
+            </geometry>
+            <material name="white">
+                <color rgba="255 255 255 1"/>
+            </material>
+        </visual>
+	<inertial>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+            <!--mass-->
+            <mass value="1"/>
+            <inertia
+                ixx="0.01" ixy="0.0" ixz="0.0"
+                iyy="0.01" iyz="0.0"
+                izz="0.01"/>
+            </inertial>
+        <collision>
+            <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
+                <geometry>
+                    <cylinder length="0.09" radius="0.03"/>
+                </geometry>
+        </collision>
+    </link>
+	
+    <joint name="leg6_joint_roll" type="revolute">
+        <axis xyz="0 0 1"/>
+        <parent link="base"/>
+        <child link="leg6_roll"/>
+        <origin rpy="0 0 -0.52356" xyz="0.15588457 -0.09 0"/>
+    </joint>
+
+</robot>
