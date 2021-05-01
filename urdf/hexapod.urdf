@@ -12,7 +12,7 @@
                 <cylinder length="0.06" radius="0.18"/>
             </geometry>
             <material name="black">
-                <color rgba="0 0 0 100"/>
+                <color rgba="0 0 0 1"/>
             </material>
         </visual>
         <collision>
@@ -24,11 +24,11 @@
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <!--mass-->
-            <mass value="1"/> 
+            <mass value="2"/> 
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0" ixy="0.0" ixz="0.0"
+                iyy="0" iyz="0.0"
+                izz="0"/>
         </inertial>
     </link>
 
@@ -37,25 +37,25 @@
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -67,30 +67,171 @@
         <origin rpy="0 0 0.52356" xyz="0.15588457 0.09 0"/>
     </joint>
 
+    <link name="leg1_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg1_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg1_roll"/>
+        <child link="leg1_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg1_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg1_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg1_pitch_1"/>
+        <child link="leg1_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg1_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg1_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg1_pitch_2"/>
+        <child link="leg1_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg1_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg1_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg1_pitch_3"/>
+        <child link="leg1_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
+    </joint>
+
     <!--=====================leg2=====================-->
     <link name="leg2_roll">
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -102,30 +243,171 @@
         <origin rpy="0 0 1.57" xyz="0 0.18 0"/>
     </joint>
 
+    <link name="leg2_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg2_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg2_roll"/>
+        <child link="leg2_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg2_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg2_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg2_pitch_1"/>
+        <child link="leg2_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg2_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg2_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg2_pitch_2"/>
+        <child link="leg2_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg2_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg2_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg2_pitch_3"/>
+        <child link="leg2_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
+    </joint>
+
     <!--=====================leg3=====================-->
     <link name="leg3_roll">
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
-            </inertial>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
+        </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -137,31 +419,171 @@
         <origin rpy="0 0 2.618" xyz="-0.15588457 0.09 0"/>
     </joint>
 
+    <link name="leg3_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg3_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg3_roll"/>
+        <child link="leg3_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg3_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg3_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg3_pitch_1"/>
+        <child link="leg3_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg3_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg3_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg3_pitch_2"/>
+        <child link="leg3_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg3_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg3_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg3_pitch_3"/>
+        <child link="leg3_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
+    </joint>
 
     <!--=====================leg4=====================-->
     <link name="leg4_roll">
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -173,30 +595,171 @@
         <origin rpy="0 0 -2.618" xyz="-0.15588457 -0.09 0"/>
     </joint>
 
+    <link name="leg4_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg4_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg4_roll"/>
+        <child link="leg4_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg4_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg4_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg4_pitch_1"/>
+        <child link="leg4_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg4_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg4_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg4_pitch_2"/>
+        <child link="leg4_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg4_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg4_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg4_pitch_3"/>
+        <child link="leg4_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
+    </joint>
+
     <!--=====================leg5=====================-->
     <link name="leg5_roll">
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -208,30 +771,171 @@
         <origin rpy="0 0 -1.57" xyz="0 -0.18 0"/>
     </joint>
 
+    <link name="leg5_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg5_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg5_roll"/>
+        <child link="leg5_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg5_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg5_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg5_pitch_1"/>
+        <child link="leg5_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg5_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg5_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg5_pitch_2"/>
+        <child link="leg5_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg5_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg5_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg5_pitch_3"/>
+        <child link="leg5_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
+    </joint>
+
     <!--=====================leg6=====================-->
     <link name="leg6_roll">
         <visual>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.09" radius="0.03"/>
+                <cylinder length="0.09" radius="0.025"/>
             </geometry>
-            <material name="white">
-                <color rgba="255 255 255 1"/>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
             </material>
         </visual>
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
             <!--mass-->
-            <mass value="1"/>
+            <mass value="0.45"/>
             <inertia
-                ixx="0.01" ixy="0.0" ixz="0.0"
-                iyy="0.01" iyz="0.0"
-                izz="0.01"/>
+                ixx="0.00014062" ixy="0.0" ixz="0.0"
+                iyy="0.00128531" iyz="0.0"
+                izz="0.00128531"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.57075 0"/>
                 <geometry>
-                    <cylinder length="0.09" radius="0.03"/>
+                    <cylinder length="0.09" radius="0.025"/>
                 </geometry>
         </collision>
     </link>
@@ -241,6 +945,147 @@
         <parent link="base"/>
         <child link="leg6_roll"/>
         <origin rpy="0 0 -0.52356" xyz="0.15588457 -0.09 0"/>
+    </joint>
+
+    <link name="leg6_pitch_1">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.8"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg6_joint_pitch_1" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.570796" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg6_roll"/>
+        <child link="leg6_pitch_1"/>
+        <origin rpy="1.570796 0 0" xyz="0.09 0 0"/>
+    </joint>
+
+    <link name="leg6_pitch_2">
+        <visual>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.8"/>
+            <inertia
+                ixx="0.00025" ixy="0.0" ixz="0.0"
+                iyy="0.002865" iyz="0.0"
+                izz="0.002865"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.08 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.16" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg6_joint_pitch_2" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="3.141592653" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg6_pitch_1"/>
+        <child link="leg6_pitch_2"/>
+        <origin rpy="0 0 -1.570796" xyz="0.14 0 0"/>
+    </joint>
+
+    <link name="leg6_pitch_3">
+        <visual>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+                <!--<mesh filename="package://hexapod_gazebo_description/meshes/tarsus.stl" scale="0.001 0.001 0.001"/>-->
+            </geometry>
+            <material name="Black">
+                <color rgba="0 0 0 0.5"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.7"/>
+            <inertia
+                ixx="0.00021875" ixy="0.0" ixz="0.0"
+                iyy="0.00468271" iyz="0.0"
+                izz="0.00468271"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.14" radius="0.025"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg6_joint_pitch_3" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-4.71238898" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <parent link="leg6_pitch_2"/>
+        <child link="leg6_pitch_3"/>
+        <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    </joint>
+
+    <link name="leg6_stick">
+        <visual>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="255 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <mass value="0.2"/>
+            <inertia
+                ixx="0.0004225" ixy="0.0" ixz="0.0"
+                iyy="0.00021792" iyz="0.0"
+                izz="0.00021792"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
+            <geometry>
+                <cylinder length="0.01" radius="0.065"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="leg6_joint_stick" type="revolute">
+        <limit effort="300" lower="-1.57075" upper="1.57075" velocity="1"/>
+        <dynamics damping="1"/>
+        <axis xyz="1 1 1"/>
+        <parent link="leg6_pitch_3"/>
+        <child link="leg6_stick"/>
+        <origin rpy="0 0 0" xyz="0.14 0 0"/>
     </joint>
 
 </robot>
