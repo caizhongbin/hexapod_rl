@@ -62,6 +62,7 @@
 	
     <joint name="leg1_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg1_roll"/>
         <origin rpy="0 0 0.52356" xyz="0.15588457 0.09 0"/>
@@ -238,6 +239,7 @@
 	
     <joint name="leg2_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg2_roll"/>
         <origin rpy="0 0 1.57" xyz="0 0.18 0"/>
@@ -414,6 +416,7 @@
 	
     <joint name="leg3_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg3_roll"/>
         <origin rpy="0 0 2.618" xyz="-0.15588457 0.09 0"/>
@@ -590,6 +593,7 @@
 	
     <joint name="leg4_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg4_roll"/>
         <origin rpy="0 0 -2.618" xyz="-0.15588457 -0.09 0"/>
@@ -766,6 +770,7 @@
 	
     <joint name="leg5_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg5_roll"/>
         <origin rpy="0 0 -1.57" xyz="0 -0.18 0"/>
@@ -942,6 +947,7 @@
 	
     <joint name="leg6_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
         <parent link="base"/>
         <child link="leg6_roll"/>
         <origin rpy="0 0 -0.52356" xyz="0.15588457 -0.09 0"/>
