@@ -1,0 +1,4 @@
+Consolas, 'Courier New', monospace
+
+self._pybullet_client.getNumJoints(self.my_hexapod)
+self._pybullet_client.getJointInfo(self.my_hexapod, i)
