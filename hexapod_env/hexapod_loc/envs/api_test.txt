@@ -1,4 +1,6 @@
-Consolas, 'Courier New', monospace
+self._pybullet_client.getNumJoints(self.my_hexapod)          30
 
-self._pybullet_client.getNumJoints(self.my_hexapod)
 self._pybullet_client.getJointInfo(self.my_hexapod, i)
+(0, b'leg1_joint_roll', 0, 7, 6, 1, 0.0, 0.0, -1.570796, 1.570796, 300.0, 1.0, b'leg1_roll', (-0.9999999989269142, 0.0, 4.6326794879647526e-05), (0.15588457, 0.09, 0.0), (0.18299522080643135, -0.6830004288172634, -0.1830036985848683, 0.683032070770984), -1)
+
+{'leg1_joint_roll': 0, 'leg1_joint_pitch_1': 1, 'leg1_joint_pitch_2': 2, 'leg1_joint_pitch_3': 3, 'leg1_joint_stick': 4, 'leg2_joint_roll': 5, 'leg2_joint_pitch_1': 6, 'leg2_joint_pitch_2': 7, 'leg2_joint_pitch_3': 8, 'leg2_joint_stick': 9, 'leg3_joint_roll': 10, 'leg3_joint_pitch_1': 11, 'leg3_joint_pitch_2': 12, 'leg3_joint_pitch_3': 13, 'leg3_joint_stick': 14, 'leg4_joint_roll': 15, 'leg4_joint_pitch_1': 16, 'leg4_joint_pitch_2': 17, 'leg4_joint_pitch_3': 18, 'leg4_joint_stick': 19, 'leg5_joint_roll': 20, 'leg5_joint_pitch_1': 21, 'leg5_joint_pitch_2': 22, 'leg5_joint_pitch_3': 23, 'leg5_joint_stick': 24, 'leg6_joint_roll': 25, 'leg6_joint_pitch_1': 26, 'leg6_joint_pitch_2': 27, 'leg6_joint_pitch_3': 28, 'leg6_joint_stick': 29}

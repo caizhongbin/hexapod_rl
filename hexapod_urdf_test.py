@@ -17,6 +17,7 @@ robot = p.loadURDF("urdf/hexapod.urdf", startPos)
 # 	p.setJointMotorControl2(robot,j,p.POSITION_CONTROL,pos,force=force)
 # dt = 1./240.
 # p.setTimeStep(dt)
+
 while (1):
   p.stepSimulation()
   time.sleep(0.01)
