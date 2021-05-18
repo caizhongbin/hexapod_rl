@@ -7,7 +7,7 @@ p.setGravity(0,0,-9.8)
 p.setAdditionalSearchPath(pd.getDataPath())
 floor = p.loadURDF("plane.urdf")
 startPos = [0,0,0.31]
-robot = p.loadURDF("urdf/hexapod.urdf", startPos)
+robot = p.loadURDF("urdf/new_hexapod.urdf", startPos)
 # numJoints = p.getNumJoints(robot)
 # p.changeVisualShape(robot,-1,rgbaColor=[1,1,1,1])
 # for j in range (numJoints):

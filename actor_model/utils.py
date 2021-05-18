@@ -159,9 +159,63 @@ class IK:
 
         return fxyz
 
+    def sigmoid_traj(self, gait_type, Sxyz, T_m=2, period_num=1):
+        num = np.int(T_m / 0.01)
+        gait_loc = self.three_gait
+        if gait_type == 4:
+            gait_loc = self.four_gait
+        elif gait_type == 5:
+            gait_loc = self.five_gait
+
+        loc_period = np.shape(gait_loc)[0]
+        period = 0
+        # 伪占空比向量
+        inv_duty = np.zeros((1, 6), dtype=np.float)
+        duty_temp = np.zeros((1, 6), dtype=np.float)
+
+        real_period = loc_period * period_num
+        fxyz = np.zeros((6, 3, real_period * (num + 1)), dtype=np.float)
+
+        while period < real_period:
+            if (period % loc_period) != 0:
+                swisur = gait_loc[period % loc_period][:]
+            else:
+                swisur = gait_loc[0][:]
+            col = period * (num + 1)
+            for i in range(6):
+                alpha = self.alpha_j[i]
+                fx_0 = self.params.R * np.cos(alpha) + (self.params.L1 + self.params.L2) * np.cos(alpha)
+                fy_0 = self.params.R * np.sin(alpha) + (self.params.L1 + self.params.L2) * np.sin(alpha)
+                fz_0 = -self.params.L3 - self.params.L4
+                temp_sign = swisur[i]
+                temp_duty = (loc_period - 1) / loc_period * (1 + temp_sign) / 2 + 1 / loc_period * (1 - temp_sign) / 2
+                temp_t = T_m / num
+                for t in range(num + 1):
+                    gama = 1/(1+np.exp(-30*(t/num-0.5)))
+                    fxyz[i][0][col + t] = fx_0 + Sxyz[0] * inv_duty[0][i] + Sxyz[0] * temp_duty * temp_sign * gama
+                    fxyz[i][1][col + t] = fy_0 + Sxyz[1] * inv_duty[0][i] + Sxyz[1] * temp_duty * temp_sign * gama
+                    if temp_sign < 0:
+                        fxyz[i][2][col + t] = fz_0
+                    else:
+                        fxyz[i][2][col + t] = fz_0 + 0.2*(-0.5*np.cos(2*np.pi*t/num)+0.5)
+                duty_temp[0][i] = temp_duty * temp_sign
+                # print(duty_temp)
+
+            inv_duty = inv_duty + duty_temp
+            # print(inv_duty)
+            period += 1
+
+        return fxyz
+        
+    def  kinematics_cal(self, theta1, theta2, theta3, theta4, alpha):
+        fx = self.params.R * np.cos(alpha) + (self.params.L1+self.params.L2*np.cos(theta2)+self.params.L3*np.sin(theta2+theta3)+self.params.L4*np.sin(theta2+theta3+theta4))*np.cos(alpha+theta1)
+        fy = self.params.R * np.sin(alpha) + (self.params.L1+self.params.L2*np.cos(theta2)+self.params.L3*np.sin(theta2+theta3)+self.params.L4*np.sin(theta2+theta3+theta4))*np.sin(alpha+theta1)
+        fz = self.params.L2*np.sin(theta2) - self.params.L3*np.cos(theta2+theta3) - self.params.L4*np.cos(theta2+theta3+theta4)
+        return [fx, fy, fz]
+
 if __name__ == '__main__':
     a = IK()
-    x = a.generate_traj(3, [0.15, 0, 0.2], T_m=2, period_num=1)
+    x = a.sigmoid_traj(3, [0.2, 0, 0.2], T_m=2, period_num=1)
     # x = a.cubic_bezier_traj(3, [0.15, 0, 0.2], T_m=2, period_num=1)
     print(x.shape)
     # b = x[0][:][:]

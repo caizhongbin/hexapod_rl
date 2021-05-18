@@ -62,6 +62,14 @@ class Hexapod(object):
                                   0, 0, 0, 0]
         self._joint_position = []
         self.Reset(reset_time=-1.0)
+    
+    def Step(self, action):
+        self.ApplyAction(action)
+        self._pybullet_client.stepSimulation()
+        self.ReceiveObservation()
+        self._step_counter += 1
+
+
 
     def _BuildJointNameToIdDict(self):
         """
@@ -96,7 +104,7 @@ class Hexapod(object):
         observation.extend(self.GetTrueBaseOrientation())     #机体方向向量
         observation.extend(self.GetTrueBodyLinearVelocity())  #body线速度
         observation.extend(self.GetTrueBodyLinearVelocity())  #body角速度
-          #body高度
+        observation.extend(self.GetBaseHigh())  #body高度
         observation.extend(self.GetTrueMotorAngles())         #关节角度
         observation.extend(self.GetTrueMotorVelocities())     #关节速度
         observation.extend(self.GetMotorAnglesHistoryT1())#关节历史位置状态信息t-0.01
@@ -116,16 +124,16 @@ class Hexapod(object):
         self._control_observation = self._GetControlObservation()
 
     def Reset(self, reload_urdf=True):
-        
         init_position = INIT_POSITION
         if reload_urdf:
             self.my_hexapod = self._pybullet_client.loadURDF(
-                "%s/hexapod.urdf" %self._urdf_root,
+                "%s/new_hexapod.urdf" %self._urdf_root,
                 init_position,
                 flags=self._pybullet_client.URDF_USE_SELF_COLLISION)
 
             self._BuildJointNameToIdDict()
             self._BuildMotorIdList()
+            self.change_dynamics()
             self.ResetPose()
         
         else:
@@ -133,8 +141,6 @@ class Hexapod(object):
                                                                   INIT_ORIENTATION)
             self._pybullet_client.resetBaseVelocity(self.my_hexapod, [0, 0, 0], [0, 0, 0])   
             self.ResetPose() 
-
-        
         self._step_counter = 0
         self._joint_position = [
             self._pybullet_client.getJointState(self.hexapod, motor_id)[0]
@@ -155,51 +161,41 @@ class Hexapod(object):
         """Reset the initial pose for the leg.
 
         Args:
-            leg_id: It should be 0, 1, 2, 3, 4, 5, 6
+            leg_id: It should be 0, 1, 2, 3, 4, 5, 6....
         """
-        leg_position = LEG_POSITION[leg_id]
-        self._pybullet_client.resetJointState(self.my_hexapod,
-                                            self._joint_name_to_id[leg_position + "joint_roll"],
-                                            0,
-                                            targetVelocity=0)
-        self._pybullet_client.resetJointState(self.my_hexapod,
-                                            self._joint_name_to_id[leg_position + "joint_pitch_1"],
-                                            0,
-                                            targetVelocity=0)
-        self._pybullet_client.resetJointState(self.my_hexapod,
-                                            self._joint_name_to_id[leg_position + "joint_pitch_2"],
-                                            0,
-                                            targetVelocity=0)
-        self._pybullet_client.resetJointState(self.my_hexapod,
-                                            self._joint_name_to_id[leg_position + "joint_pitch_3"],
-                                            0,
-                                            targetVelocity=0)
-
         self._pybullet_client.setJointMotorControl2(
           bodyIndex=self.my_hexapod,
-          jointIndex=(self._joint_name_to_id[leg_position + "joint_roll"]),
+          jointIndex=self.joint_leg_joint_id[leg_id][0],
           controlMode=self._pybullet_client.POSITION_CONTROL,
           targetPosition=0,
-          force=20)
+          force=30)
         self._pybullet_client.setJointMotorControl2(
           bodyIndex=self.my_hexapod,
-          jointIndex=(self._joint_name_to_id[leg_position + "joint_pitch_1"]),
+          jointIndex=self.joint_leg_joint_id[leg_id][1],
           controlMode=self._pybullet_client.POSITION_CONTROL,
           targetPosition=0,
-          force=20)
+          force=30)
         self._pybullet_client.setJointMotorControl2(
           bodyIndex=self.my_hexapod,
-          jointIndex=(self._joint_name_to_id[leg_position + "joint_pitch_2"]),
+          jointIndex=self.joint_leg_joint_id[leg_id][2],
           controlMode=self._pybullet_client.POSITION_CONTROL,
           targetPosition=0,
-          force=20)
+          force=30)
         self._pybullet_client.setJointMotorControl2(
           bodyIndex=self.my_hexapod,
-          jointIndex=(self._joint_name_to_id[leg_position + "joint_pitch_3"]),
+          jointIndex=self.joint_leg_joint_id[leg_id][3],
           controlMode=self._pybullet_client.POSITION_CONTROL,
           targetPosition=0,
-          force=20)
+          force=30)
     
+    def change_dynamics(self):
+        self._pybullet_client.changeDynamics(self.my_hexapod, 4, lateralFriction=4.5, frictionAnchor=1)
+        self._pybullet_client.changeDynamics(self.my_hexapod, 9, lateralFriction=4.5, frictionAnchor=1)
+        self._pybullet_client.changeDynamics(self.my_hexapod, 14, lateralFriction=4.5, frictionAnchor=1)
+        self._pybullet_client.changeDynamics(self.my_hexapod, 19, lateralFriction=4.5, frictionAnchor=1)
+        self._pybullet_client.changeDynamics(self.my_hexapod, 24, lateralFriction=4.5, frictionAnchor=1)
+        self._pybullet_client.changeDynamics(self.my_hexapod, 29, lateralFriction=4.5, frictionAnchor=1)
+
     def reset_action(self, actions):
         self._action_history = actions
 
@@ -213,12 +209,19 @@ class Hexapod(object):
             joint_angle[i] = actions[i] * half_pi
         return joint_angle
 
+    def GetBaseHigh(self):
+        return self.GetBasePosition()[2]
 
+    def GetBaseOrientation(self):
+        """Get the position of hexapod's base.
+        """
+        _, orientation = (self._pybullet_client.getBasePositionAndOrientation(self.hexapod))
+        return orientation
+    
     def GetBasePosition(self):
-        """Get the position of minitaur's base.
+        """Get the position of hexapod's base.
         """
         position, _ = (self._pybullet_client.getBasePositionAndOrientation(self.hexapod))
-
         return position
 
     def GetBasePositionAndOrientation(self):

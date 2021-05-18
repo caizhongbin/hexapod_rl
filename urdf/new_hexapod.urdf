@@ -24,11 +24,11 @@
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <!--mass-->
-            <mass value="1.8"/> 
+            <mass value="6.107"/> 
             <inertia
-                ixx="0" ixy="0.0" ixz="0.0"
-                iyy="0" iyz="0.0"
-                izz="0"/>
+                ixx="0.051300951" ixy="0.0" ixz="0.0"
+                iyy="0.098937549" iyz="0.0"
+                izz="0.051300951"/>
         </inertial>
     </link>
 
@@ -46,11 +46,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -62,7 +62,7 @@
 	
     <joint name="leg1_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg1_roll"/>
         <origin rpy="0 0 0.52356" xyz="0.15588457 0.09 0"/>
@@ -80,11 +80,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -96,7 +96,7 @@
 
     <joint name="leg1_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg1_roll"/>
         <child link="leg1_pitch_1"/>
@@ -115,11 +115,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -131,7 +131,7 @@
 
     <joint name="leg1_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg1_pitch_1"/>
         <child link="leg1_pitch_2"/>
@@ -151,11 +151,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -167,7 +167,7 @@
 
     <joint name="leg1_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg1_pitch_2"/>
         <child link="leg1_pitch_3"/>
@@ -175,17 +175,10 @@
     </joint>
 
     <link name="leg1_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3.0"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -193,24 +186,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
-    <joint name="leg1_joint_stick" type="fixed">
+    <joint name="leg1_joint_stick" type="revolute">
         <limit effort="300" lower="-0.08" upper="0.08" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg1_pitch_3"/>
         <child link="leg1_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
@@ -230,11 +223,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -246,7 +239,7 @@
 	
     <joint name="leg2_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg2_roll"/>
         <origin rpy="0 0 1.5708" xyz="0 0.18 0"/>
@@ -264,11 +257,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -280,7 +273,7 @@
 
     <joint name="leg2_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg2_roll"/>
         <child link="leg2_pitch_1"/>
@@ -299,11 +292,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -315,7 +308,7 @@
 
     <joint name="leg2_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg2_pitch_1"/>
         <child link="leg2_pitch_2"/>
@@ -335,11 +328,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -351,7 +344,7 @@
 
     <joint name="leg2_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg2_pitch_2"/>
         <child link="leg2_pitch_3"/>
@@ -359,17 +352,10 @@
     </joint>
 
     <link name="leg2_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3.0"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -377,24 +363,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="leg2_joint_stick" type="revolute">
-        <limit effort="300" lower="-0.01" upper="0.01" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-0.08" upper="0.08" velocity="1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg2_pitch_3"/>
         <child link="leg2_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
@@ -414,11 +400,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
         </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -430,7 +416,7 @@
 	
     <joint name="leg3_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg3_roll"/>
         <origin rpy="0 0 2.618" xyz="-0.15588457 0.09 0"/>
@@ -448,11 +434,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -464,7 +450,7 @@
 
     <joint name="leg3_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg3_roll"/>
         <child link="leg3_pitch_1"/>
@@ -483,11 +469,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -499,7 +485,7 @@
 
     <joint name="leg3_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg3_pitch_1"/>
         <child link="leg3_pitch_2"/>
@@ -519,11 +505,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -535,7 +521,7 @@
 
     <joint name="leg3_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg3_pitch_2"/>
         <child link="leg3_pitch_3"/>
@@ -543,17 +529,10 @@
     </joint>
 
     <link name="leg3_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3.0"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -561,24 +540,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.57075 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="leg3_joint_stick" type="revolute">
-        <limit effort="300" lower="-0.01" upper="0.01" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-0.08" upper="0.08" velocity="1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg3_pitch_3"/>
         <child link="leg3_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
@@ -598,11 +577,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -614,7 +593,7 @@
 	
     <joint name="leg4_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg4_roll"/>
         <origin rpy="0 0 -2.618" xyz="-0.15588457 -0.09 0"/>
@@ -632,11 +611,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -648,7 +627,7 @@
 
     <joint name="leg4_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg4_roll"/>
         <child link="leg4_pitch_1"/>
@@ -667,11 +646,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -683,7 +662,7 @@
 
     <joint name="leg4_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg4_pitch_1"/>
         <child link="leg4_pitch_2"/>
@@ -703,11 +682,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -719,7 +698,7 @@
 
     <joint name="leg4_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg4_pitch_2"/>
         <child link="leg4_pitch_3"/>
@@ -727,17 +706,10 @@
     </joint>
 
     <link name="leg4_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3.0"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -745,24 +717,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="leg4_joint_stick" type="revolute">
-        <limit effort="300" lower="-0.01" upper="0.01" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-0.08" upper="0.08" velocity="1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg4_pitch_3"/>
         <child link="leg4_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
@@ -782,11 +754,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -798,7 +770,7 @@
 	
     <joint name="leg5_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg5_roll"/>
         <origin rpy="0 0 -1.5708" xyz="0 -0.18 0"/>
@@ -816,11 +788,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -832,7 +804,7 @@
 
     <joint name="leg5_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg5_roll"/>
         <child link="leg5_pitch_1"/>
@@ -851,11 +823,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -867,7 +839,7 @@
 
     <joint name="leg5_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg5_pitch_1"/>
         <child link="leg5_pitch_2"/>
@@ -887,11 +859,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -903,7 +875,7 @@
 
     <joint name="leg5_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg5_pitch_2"/>
         <child link="leg5_pitch_3"/>
@@ -911,17 +883,10 @@
     </joint>
 
     <link name="leg5_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -929,24 +894,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="leg5_joint_stick" type="revolute">
-        <limit effort="300" lower="-0.01" upper="0.01" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-0.08727" upper="0.08727" velocity="1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg5_pitch_3"/>
         <child link="leg5_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
@@ -966,11 +931,11 @@
 	<inertial>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
             <!--mass-->
-            <mass value="0.45"/>
+            <mass value="0.177"/>
             <inertia
-                ixx="0.00014062" ixy="0.0" ixz="0.0"
-                iyy="0.00128531" iyz="0.0"
-                izz="0.00128531"/>
+                ixx="0.000055223" ixy="0.0" ixz="0.0"
+                iyy="0.000146894" iyz="0.0"
+                izz="0.000146894"/>
             </inertial>
         <collision>
             <origin xyz="0.045 0 0" rpy="0 1.5708 0"/>
@@ -982,7 +947,7 @@
 	
     <joint name="leg6_joint_roll" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.3090" velocity="3"/>
         <parent link="base"/>
         <child link="leg6_roll"/>
         <origin rpy="0 0 -0.52356" xyz="0.15588457 -0.09 0"/>
@@ -1000,11 +965,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.57075 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -1016,7 +981,7 @@
 
     <joint name="leg6_joint_pitch_1" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg6_roll"/>
         <child link="leg6_pitch_1"/>
@@ -1035,11 +1000,11 @@
         </visual>
         <inertial>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.8"/>
+            <mass value="0.314"/>
             <inertia
-                ixx="0.00025" ixy="0.0" ixz="0.0"
-                iyy="0.002865" iyz="0.0"
-                izz="0.002865"/>
+                ixx="0.000098175" ixy="0.0" ixz="0.0"
+                iyy="0.000719294" iyz="0.0"
+                izz="0.000719294"/>
         </inertial>
         <collision>
             <origin xyz="0.08 0 0" rpy="0 1.5708 0"/>
@@ -1051,7 +1016,7 @@
 
     <joint name="leg6_joint_pitch_2" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-0.7854" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg6_pitch_1"/>
         <child link="leg6_pitch_2"/>
@@ -1071,11 +1036,11 @@
         </visual>
         <inertial>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.7"/>
+            <mass value="0.275"/>
             <inertia
-                ixx="0.00021875" ixy="0.0" ixz="0.0"
-                iyy="0.00468271" iyz="0.0"
-                izz="0.00468271"/>
+                ixx="0.000085903" ixy="0.0" ixz="0.0"
+                iyy="0.000491937" iyz="0.0"
+                izz="0.000491937"/>
         </inertial>
         <collision>
             <origin xyz="0.07 0 0" rpy="0 1.5708 0"/>
@@ -1087,7 +1052,7 @@
 
     <joint name="leg6_joint_pitch_3" type="revolute">
         <axis xyz="0 0 1"/>
-        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="1"/>
+        <limit effort="300" lower="-1.570796" upper="1.570796" velocity="3"/>
         <dynamics damping="0"/>
         <parent link="leg6_pitch_2"/>
         <child link="leg6_pitch_3"/>
@@ -1095,17 +1060,10 @@
     </joint>
 
     <link name="leg6_stick">
-        <contact>
-            <friction_anchor/>
-            <stiffness value="30000.0"/>
-            <damping value="1000.0"/>
-            <spinning_friction value="3"/>
-            <lateral_friction value="4.0"/>
-        </contact>
         <visual>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
             <material name="Red">
                 <color rgba="255 0 0 1"/>
@@ -1113,24 +1071,24 @@
         </visual>
         <inertial>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
-            <mass value="0.2"/>
+            <mass value="0.133"/>
             <inertia
-                ixx="0.0004225" ixy="0.0" ixz="0.0"
-                iyy="0.00021792" iyz="0.0"
-                izz="0.00021792"/>
+                ixx="0.000141305" ixy="0.0" ixz="0.0"
+                iyy="0.000141305" iyz="0.0"
+                izz="0.000280397"/>
         </inertial>
         <collision>
             <origin xyz="0.005 0 0" rpy="0 1.5708 0"/>
             <geometry>
-                <cylinder length="0.01" radius="0.04"/>
+                <cylinder length="0.01" radius="0.065"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="leg6_joint_stick" type="revolute">
-        <limit effort="300" lower="-0.01" upper="0.01" velocity="1"/>
-        <dynamics damping="0"/>
-        <axis xyz="0 0 1"/>
+        <limit effort="300" lower="-0.08" upper="0.08" velocity="1"/>
+        <dynamics damping="0.0" friction="0.0"/>
+        <axis xyz="1 1 1"/>
         <parent link="leg6_pitch_3"/>
         <child link="leg6_stick"/>
         <origin rpy="0 0 0" xyz="0.14 0 0"/>
