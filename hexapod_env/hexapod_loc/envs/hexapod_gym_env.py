@@ -10,6 +10,7 @@ import numpy as np
 from gym.utils import seeding
 from hexapod_env.hexapod_loc.envs.hexapod import Hexapod
 import math
+import time
 
 RENDER_HEIGHT = 360
 RENDER_WIDTH = 480
@@ -20,19 +21,25 @@ class HexapodGymEnv(gym.Env):
 	
     def __init__(self, urdf_root=pybullet_data.getDataPath(), 
                  render=False,
-                 distance_limit=float("inf"),
+                 distance_limit=10,
                  forward_reward_cap=float("inf"), 
-                 distance_weight=1.0,
-                 energy_weight=0.005,
+                 distance_weight=3.0,
+                 energy_weight=0.02,
                  drift_weight=0.0,
                  shake_weight=0.0,
-                 hard_reset=True):	   
+                 hard_reset=True):
+        super(HexapodGymEnv, self).__init__()  
         self._urdf_root = urdf_root
+        self._hexapod_urdf_root = "/home/czbfy/hexapod_rl/urdf"
         self._observation = []
+        self._norm_observation = []
+        self._env_step_counter = 0
         self._is_render = render
         self._cam_dist = 1.0
         self._cam_yaw = 0
         self._cam_pitch = -30
+        self._last_frame_time = 0.0
+        self.control_time_step = 0.01
         self._distance_limit = distance_limit
         self._forward_reward_cap = forward_reward_cap
         self._time_step = 0.01
@@ -48,45 +55,51 @@ class HexapodGymEnv(gym.Env):
         self.seed()
         self.reset()
 
-        self._action_bound = 1
+        self._action_bound = 1.0
         action_dim = NUM_MOTORS
         action_high = np.array([self._action_bound] * action_dim)
         self.action_space = spaces.Box(-action_high, action_high)
-        observation_low = -1
-        observation_high = 1
+
+        observation_high = self._get_observation_upper_bound()
+        observation_low = -observation_high
         self.observation_space = spaces.Box(observation_low, observation_high)	 
-        
         self._hard_reset = hard_reset
-			 
+
     def step(self, action):
         """Step forward the simulation, given the action.
 
         Args:
-        action: A list of desired motor angles for eight motors.
+        action: A list of desired motor angles for motors.
 
         Returns:
-          observations: The angles, velocities and torques of all motors.
+          observations: 
           reward: The reward for the current state-action pair.
           done: Whether the episode has ended.
           info: A dictionary that stores diagnostic information.
-
-        Raises:
-          ValueError: The action dimension is not the same as the number of motors.
-          ValueError: The magnitude of actions is out of bounds.
         """
         self._last_base_position = self.hexapod.GetBasePosition()
+        
+        time_spent = time.time() - self._last_frame_time
+        self._last_frame_time = time.time()
+        time_to_sleep = self.control_time_step - time_spent
+        if time_to_sleep > 0:
+            time.sleep(time_to_sleep)
 
         action = self._transform_action_to_motor_command(action)
         self.hexapod.Step(action)
         reward = self._reward()
         done = self._termination()
 
+        self._env_step_counter += 1
+
         if done:
             self.hexapod.Terminate()
+        
+        observation = np.array(self._get_observation()).astype(np.float32)
+        info = {}
+        return observation, reward, done, info
 
-        return np.array(self._get_observation()), reward, done, {}
-
-    def reset(self, initial_motor_angles=None, reset_duration=1.0):
+    def reset(self):
 	    #重新初始化
         self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_RENDERING, 0)
 	
@@ -94,11 +107,15 @@ class HexapodGymEnv(gym.Env):
             self._pybullet_client.resetSimulation()
             self._pybullet_client.setGravity(0, 0, -10)
             self._ground_id = self._pybullet_client.loadURDF("%s/plane.urdf" % self._urdf_root)
-            self.hexapod = Hexapod()
+            self.hexapod = Hexapod(pybullet_client=self._pybullet_client, urdf_root=self._hexapod_urdf_root)
         
         self.hexapod.Reset(reload_urdf=False)
+        self._env_step_counter = 0
+        self._last_base_position = [0, 0, 0]
+        self._pybullet_client.resetDebugVisualizerCamera(self._cam_dist, self._cam_yaw,
+                                                     self._cam_pitch, [0, 0, 0])
         self._pybullet_client.configureDebugVisualizer(self._pybullet_client.COV_ENABLE_RENDERING, 1)
-        return self._get_observation()	
+        return np.array(self._get_observation())
 		
     def render(self, mode="rgb_array", close=False):
         if mode != "rgb_array":
@@ -127,7 +144,7 @@ class HexapodGymEnv(gym.Env):
         return rgb_array
 
     def close(self):
-        return
+        self.hexapod.Terminate()
 
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
@@ -163,21 +180,26 @@ class HexapodGymEnv(gym.Env):
 
     def _get_observation(self):
         observation = []
-        #observation.extend(self.minitaur.GetMotorAngles().tolist())
-        #observation.extend(self.minitaur.GetMotorVelocities().tolist())
-        #observation.extend(self.minitaur.GetMotorTorques().tolist())
-        #observation.extend(list(self.minitaur.GetBaseOrientation()))
+        observation.extend(list(self.hexapod.GetBasePosition()))
+        observation.extend(list(self.hexapod.GetBaseOrientation()))
+        observation.extend(list(self.hexapod.GetTrueBodyLinearVelocity()))
+        observation.extend(list(self.hexapod.GetTrueBodyAngularVelocity()))
+        observation.extend(self.hexapod.GetTrueMotorAngles())
+        observation.extend(self.hexapod.GetTrueMotorVelocities())
+        observation = observation - np.mean(observation)  
+        observation = observation / np.max(np.abs(observation)) 
         self._observation = observation
         return self._observation
     
+
     def _transform_action_to_motor_command(self, action):
         action = self.hexapod.ConvertActionToLegAngle(action)
         return action
     
     def _termination(self):
-        position = self.minitaur.GetBasePosition()
+        position = self.hexapod.GetBasePosition()
         distance = math.sqrt(position[0]**2 + position[1]**2)
-        return self.is_fallen() or distance > self._distance_limit
+        return self.is_fallen() or position[2]>0.35 or distance > self._distance_limit
 
     def is_fallen(self):
         """Decide whether the hexapod has fallen.
@@ -198,9 +220,13 @@ class HexapodGymEnv(gym.Env):
     def _get_observation_upper_bound(self):
         """Get the upper bound of the observation.
         """
-        upper_bound = np.zeros(self._get_observation_dimension())
-        # num_motors = self.minitaur.num_motors
-        # upper_bound[0:num_motors] = math.pi  # Joint angle.
+        upper_bound = np.zeros(61)
+        upper_bound[0:3] = self._distance_limit  # base_position
+        upper_bound[3:7] = 1.0  # base_orientation
+        upper_bound[7:10] = 3.0 #base linear vel
+        upper_bound[10:13] = 3.0 #base angular vel
+        upper_bound[13:37] = math.pi/2 #joint position
+        upper_bound[37:61] = 4.0 #joint vel
         # upper_bound[num_motors:2 * num_motors] = (motor.MOTOR_SPEED_LIMIT)  # Joint velocity.
         # upper_bound[2 * num_motors:3 * num_motors] = (motor.OBSERVED_TORQUE_LIMIT)  # Joint torque.
         # upper_bound[3 * num_motors:] = 1.0  # Quaternion of base orientation.

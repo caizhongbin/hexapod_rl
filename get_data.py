@@ -98,15 +98,23 @@ for _ in range(1):
         # my_pybullet_client.stepSimulation()
         target_pos = my_pybullet_client.getLinkState(my_hexapod, 4)[0]
         my_pybullet_client.addUserDebugLine(pre_pos, target_pos, lineColorRGB=[1, 0, 0], lifeTime=8, lineWidth=3)
-        for j in range(4):
-            for i in range(6):
-                my_pybullet_client.setJointMotorControl2(my_hexapod, 
-                                                         joint_leg_joint_id[i][j], 
-                                                         my_pybullet_client.POSITION_CONTROL, 
-                                                         targetPosition=joint_data[i][j][k],
-                                                         positionGain=kp,
-                                                         velocityGain=kd, 
-                                                         force=30)
+        # for j in range(4):
+        for i in range(6):
+                # my_pybullet_client.setJointMotorControl2(my_hexapod, 
+                #                                          joint_leg_joint_id[i][j], 
+                #                                          my_pybullet_client.POSITION_CONTROL, 
+                #                                          targetPosition=joint_data[i][j][k],
+                #                                          positionGain=kp,
+                #                                          velocityGain=kd, 
+                #                                          force=30)
+            my_pybullet_client.setJointMotorControlArray(my_hexapod,
+                jointIndices=joint_leg_joint_id[i],
+                controlMode=my_pybullet_client.POSITION_CONTROL,
+                targetPositions=[joint_data[i][0][k], joint_data[i][1][k], joint_data[i][2][k], joint_data[i][3][k]],
+                forces=[30, 30, 30, 30],
+                positionGains=[kp, kp, kp, kp],
+                velocityGains=[kd, kd, kd, kd]
+            )
                 # my_pybullet_client.setJointMotorControl2(my_hexapod, 
                 #                                          joint_leg_joint_id[i][j], 
                 #                                          my_pybullet_client.POSITION_CONTROL, 
@@ -124,7 +132,7 @@ for _ in range(1):
         for j in range(4):
             for i in range(6):
                 joint_torque[i][j][k] = my_pybullet_client.getJointState(my_hexapod, joint_leg_joint_id[i][j])[3]
-
+        print(my_pybullet_client.getBaseVelocity(my_hexapod))
         real_joint_data[k] = my_pybullet_client.getJointState(my_hexapod, 0)[0]
         
         pre_pos = target_pos
@@ -142,20 +150,20 @@ print([last_orientation[0]-first_orientation[0],
        last_orientation[3]-first_orientation[3]])
 
 print(calculate_mse(real_joint_data, joint_data[0][2][:]))
-x = np.linspace(0, 1, count)
-fig, ax = plt.subplots()
-ax.plot(x, real_joint_data, label='real_joint_data label')
-ax.plot(x, joint_data[0][0][:], label='command_joint_data label')
-ax.set_xlabel('time')
-ax.set_ylabel('joint angle')
-ax.set_title('control and real area chart')
-ax.legend()
-plt.show()
-
-# fig = plt.figure()
-# ax = fig.add_subplot(1, 1, 1)
-# ax.plot(joint_torque[0][1][:])
+# x = np.linspace(0, 1, count)
+# fig, ax = plt.subplots()
+# ax.plot(x, real_joint_data, label='real_joint_data label')
+# ax.plot(x, joint_data[0][0][:], label='command_joint_data label')
+# ax.set_xlabel('time')
+# ax.set_ylabel('joint angle')
+# ax.set_title('control and real area chart')
+# ax.legend()
 # plt.show()
+
+fig = plt.figure()
+ax = fig.add_subplot(1, 1, 1)
+ax.plot(joint_torque[0][0][:])
+plt.show()
 
 
 
