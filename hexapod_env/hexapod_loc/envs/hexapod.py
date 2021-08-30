@@ -38,7 +38,8 @@ class Hexapod(object):
         self.num_legs = int(self.num_motors / 4)
         self._pybullet_client = pybullet_client      
         self._urdf_root = urdf_root
-        
+        self.time_step = 0.01
+        self._motor_velocity_limit = 3
         #self._observation_history = collections.deque(maxlen=100)
         self._action_history = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self._cmd_vel = cmd_vel
@@ -46,19 +47,9 @@ class Hexapod(object):
         
         self.joint_leg_joint_id = [[0,1,2,3], [5,6,7,8], [10,11,12,13], [15,16,17,18], [20,21,22,23], [25,26,27,28]]
         
-        self._joint_history_t1 = [0, 0, 0, 0,
-                                  0, 0, 0, 0, 
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0]
-        self._joint_history_t2 = [0, 0, 0, 0,
-                                  0, 0, 0, 0, 
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0,
-                                  0, 0, 0, 0]
-        self._joint_position = []
+        self._joint_history_t1 = np.zeros((1,24))
+        self._joint_history_t2 = np.zeros((1,24))
+        self._joint_position   = np.zeros((1,24))
         self.Reset()
     
     def Step(self, action):
@@ -105,7 +96,7 @@ class Hexapod(object):
         observation.extend(self.GetTrueBodyAngularVelocity())  #body角速度
         #observation.extend(self.GetBaseHigh())  #body高度
         observation.extend(self.GetTrueMotorAngles())         #关节角度
-        observation.extend(self.GetTrueMotorVelocities())     #关节速度
+        # observation.extend(self.GetTrueMotorVelocities())     #关节速度
         #observation.extend(self.GetMotorAnglesHistoryT1())#关节历史位置状态信息t-0.01
         #observation.extend(self.GetMotorAnglesHistoryT2())#关节历史位置状态信息t-0.02
         #observation.extend(self._action_history)
@@ -243,6 +234,7 @@ class Hexapod(object):
             Motor angles
         """
         motor_angles = [self._pybullet_client.getJointState(self.my_hexapod, motor_id)[0] for motor_id in self._motor_id_list]
+        motor_angles = np.array(motor_angles)
         self._joint_history_t2 = self._joint_history_t1 
         self._joint_history_t1 = self._joint_position
         self._joint_position = motor_angles
@@ -293,12 +285,16 @@ class Hexapod(object):
         return vel_and_ang
 
 
-    def ApplyAction(self, action):
+    def ApplyAction(self, motor_commands):
+        current_joint_angles = self.GetTrueMotorAngles()
+        motor_commands_max = (current_joint_angles + self.time_step * self._motor_velocity_limit)
+        motor_commands_min = (current_joint_angles - self.time_step * self._motor_velocity_limit)
+        motor_commands = np.clip(motor_commands, motor_commands_min, motor_commands_max)
         for i in range(self.num_legs):
             self._pybullet_client.setJointMotorControlArray(self.my_hexapod,
               jointIndices=self.joint_leg_joint_id[i],
               controlMode=self._pybullet_client.POSITION_CONTROL,
-              targetPositions=[action[i*4], action[i*4+1], action[i*4+2], action[i*4+3]],
+              targetPositions=[motor_commands[i*4], motor_commands[i*4+1], motor_commands[i*4+2], motor_commands[i*4+3]],
               forces=[30, 30, 30, 30],
               positionGains=[1, 1, 1, 1],
               velocityGains=[1, 1, 1, 1]

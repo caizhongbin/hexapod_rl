@@ -27,10 +27,11 @@ class HexapodGymEnv(gym.Env):
                  energy_weight=0.02,
                  drift_weight=0.0,
                  shake_weight=0.0,
-                 hard_reset=True):
+                 hard_reset=True,
+                 hexapod_urdf_root="/home/czbfy/hexapod_rl/urdf"):
         super(HexapodGymEnv, self).__init__()  
         self._urdf_root = urdf_root
-        self._hexapod_urdf_root = "/home/czbfy/hexapod_rl/urdf"
+        self._hexapod_urdf_root = hexapod_urdf_root
         self._observation = []
         self._norm_observation = []
         self._env_step_counter = 0
@@ -185,9 +186,9 @@ class HexapodGymEnv(gym.Env):
         observation.extend(list(self.hexapod.GetTrueBodyLinearVelocity()))
         observation.extend(list(self.hexapod.GetTrueBodyAngularVelocity()))
         observation.extend(self.hexapod.GetTrueMotorAngles())
-        observation.extend(self.hexapod.GetTrueMotorVelocities())
-        observation = observation - np.mean(observation)  
-        observation = observation / np.max(np.abs(observation)) 
+        # observation.extend(self.hexapod.GetTrueMotorVelocities())
+        # observation = observation - np.mean(observation)  
+        # observation = observation / np.max(np.abs(observation)) 
         self._observation = observation
         return self._observation
     
@@ -220,13 +221,13 @@ class HexapodGymEnv(gym.Env):
     def _get_observation_upper_bound(self):
         """Get the upper bound of the observation.
         """
-        upper_bound = np.zeros(61)
+        upper_bound = np.zeros(37)
         upper_bound[0:3] = self._distance_limit  # base_position
         upper_bound[3:7] = 1.0  # base_orientation
         upper_bound[7:10] = 3.0 #base linear vel
         upper_bound[10:13] = 3.0 #base angular vel
         upper_bound[13:37] = math.pi/2 #joint position
-        upper_bound[37:61] = 4.0 #joint vel
+        # upper_bound[37:61] = 3.0 #joint vel
         # upper_bound[num_motors:2 * num_motors] = (motor.MOTOR_SPEED_LIMIT)  # Joint velocity.
         # upper_bound[2 * num_motors:3 * num_motors] = (motor.OBSERVED_TORQUE_LIMIT)  # Joint torque.
         # upper_bound[3 * num_motors:] = 1.0  # Quaternion of base orientation.
